@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+
+import drums from './data.json'
+import { useState } from 'react';
+
 
 function App() {
+
+  const [text, setText] = useState('');
+
+
+   const handleClick = (e) =>{
+    
+    let audio = new Audio( `${e.target.value}` );
+    audio.play()
+    setText(e.target.id);
+   }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id="drum-machine">
+     
+    <div id="display">{text}</div>
+    <div className="whole-drum">  
+     {drums.drums.map((drum) => (
+      <button
+      key={drum.keyTrigger}   
+      className="drum-pad"
+      value={drum.url}
+      
+      id={drum.description}
+      onClick={handleClick}
+      > 
+      {`${drum.keyTrigger}`}
+    <audio src={drum.url} className='clip' id={drum.keyTrigger} /> </button>
+        ))}
+
+
+</div>
     </div>
   );
 }
